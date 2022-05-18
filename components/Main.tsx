@@ -9,10 +9,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const Main = () => {
+const Main = ({ twTokens, sanityTokens, walletAddress }) => {
   return (
     <Wrapper>
-      <Portfolio />
+      <Portfolio twTokens={twTokens} sanityTokens={sanityTokens} walletAddress={walletAddress} />
       <Promos />
     </Wrapper>
   );

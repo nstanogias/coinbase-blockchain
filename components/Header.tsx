@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Wrapper = styled.div`
   width: calc(100%);
@@ -58,7 +59,24 @@ const Separator = styled.div``;
 
 const ProfileIcon = styled.div``;
 
-const Header = ({ walletAddress }) => {
+const Header = ({ twTokens, sanityTokens, walletAddress }) => {
+  const router = useRouter();
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: '#0a0b0d',
+      padding: 0,
+      border: 'none',
+    },
+    overlay: {
+      backgroundColor: 'rgba(10, 11, 13, 0.75)',
+    },
+  };
   return (
     <Wrapper>
       <Title>Assets</Title>

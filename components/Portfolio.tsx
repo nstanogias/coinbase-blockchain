@@ -3,6 +3,7 @@ import Coin from './Coin';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { coins } from '../static/coins';
 import BalanceChart from './BalanceChart';
+import { useEffect, useState } from 'react';
 
 const Wrapper = styled.div`
   flex: 1;
@@ -66,7 +67,34 @@ const Title = styled.div`
   font-weight: 600;
 `;
 
-const Portfolio = () => {
+const Portfolio = ({ twTokens, sanityTokens, walletAddress }) => {
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [sender] = useState(walletAddress);
+
+  const getBalance = async (activeTwToken) => {
+    const balance = await activeTwToken?.balanceOf(sender);
+
+    return parseInt(balance?.displayValue);
+  };
+
+  const calculateTotalBalance = async () => {
+    setWalletBalance(0);
+    let bal = 0;
+    const promises = sanityTokens.map(async (token) => {
+      const currentTwToken = twTokens.filter((twToken) => twToken.getAddress() === token.contractAddress);
+      const balance = await getBalance(currentTwToken[0]);
+      return balance * token.usdPrice;
+    });
+    const results = await Promise.all(promises);
+    setWalletBalance(results.reduce((partialSum, a) => partialSum + a, 0));
+  };
+
+  useEffect(() => {
+    if (sanityTokens.length > 0 && twTokens.length > 0) {
+      calculateTotalBalance();
+    }
+  }, [twTokens, sanityTokens]);
+
   return (
     <Wrapper>
       <Content>
@@ -74,10 +102,10 @@ const Portfolio = () => {
           <div>
             <Balance>
               <BalanceTitle>Portfolio balance</BalanceTitle>
-              {/* <BalanceValue>
+              <BalanceValue>
                 {'$'}
                 {walletBalance.toLocaleString('US')}
-              </BalanceValue> */}
+              </BalanceValue>
             </Balance>
           </div>
           <BalanceChart />
