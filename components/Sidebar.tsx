@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { navItems } from '../static/navItems';
 
 const Wrapper = styled.div`
-  height: calc(100vh);
   border-right: 1px solid #282b2f;
   width: calc(22rem - 16px - 16px);
   padding: 0 1rem;

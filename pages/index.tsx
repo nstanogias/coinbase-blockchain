@@ -5,7 +5,6 @@ import Dashboard from '../components/Dashboard';
 
 const Wrapper = styled.div`
   display: flex;
-  height: 100vh;
   max-width: 100vw;
   background-color: #0a0b0d;
   color: white;
