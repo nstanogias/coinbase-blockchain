@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Modal from 'react-modal';
+import TransferModal from './modalComponents/TransferModal';
+
+Modal.setAppElement('#__next');
 
 const Wrapper = styled.div`
   width: calc(100%);
@@ -96,6 +100,9 @@ const Header = ({ twTokens, sanityTokens, walletAddress }) => {
       </ButtonsContainer>
       <Separator />
       <ProfileIcon />
+      <Modal isOpen={!!router.query.transfer} onRequestClose={() => router.push('/')} style={customStyles}>
+        <TransferModal twTokens={twTokens} sanityTokens={sanityTokens} walletAddress={walletAddress} />
+      </Modal>
     </Wrapper>
   );
 };

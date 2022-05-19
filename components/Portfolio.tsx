@@ -79,7 +79,6 @@ const Portfolio = ({ twTokens, sanityTokens, walletAddress }) => {
 
   const calculateTotalBalance = async () => {
     setWalletBalance(0);
-    let bal = 0;
     const promises = sanityTokens.map(async (token) => {
       const currentTwToken = twTokens.filter((twToken) => twToken.getAddress() === token.contractAddress);
       const balance = await getBalance(currentTwToken[0]);

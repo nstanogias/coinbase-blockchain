@@ -32,12 +32,12 @@ const Dashboard = ({ address }) => {
         );
         const tempSanityTokens = await coins.json();
 
-        const thirdwebTokens: (Token | undefined)[] = [];
+        // const thirdwebTokens: (Token | undefined)[] = [];
 
-        thirdwebTokens.push(btcToken);
-        thirdwebTokens.push(ethToken);
-        thirdwebTokens.push(solToken);
-        setTwTokens(thirdwebTokens);
+        // thirdwebTokens.push(btcToken);
+        // thirdwebTokens.push(ethToken);
+        // thirdwebTokens.push(solToken);
+        // setTwTokens(thirdwebTokens);
         setSanityTokens(tempSanityTokens.result);
       } catch (error) {
         console.error(error);
@@ -47,11 +47,18 @@ const Dashboard = ({ address }) => {
 
   useEffect(() => {
     if (sanityTokens) {
-      // const provider = new ethers.Wallet(
-      //   process.env.NEXT_PUBLIC_METAMASK_KEY!,
-      //   ethers.getDefaultProvider('https://rinkeby.infura.io/v3/')
-      // );
-      // const sdk = new ThirdwebSDK(provider);
+      const sdk = new ThirdwebSDK(
+        new ethers.Wallet(
+          process.env.NEXT_PUBLIC_METAMASK_KEY!,
+          ethers.getDefaultProvider('https://rinkeby.infura.io/v3/552276f94bf9434992811b08ea2a20ab')
+        )
+      );
+
+      sanityTokens.map((tokenItem: any) => {
+        const currentToken = sdk.getToken(tokenItem.contractAddress);
+
+        setTwTokens((prevState) => [...prevState, currentToken]);
+      });
     }
   }, [sanityTokens]);
 
