@@ -17,10 +17,10 @@ const WalletConnect = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 `;
 
 const Button = styled.div`
-  /* flex: 0; */
   border: 1px solid #282b2f;
   padding: 0.8rem;
   font-size: 1.3rem;
